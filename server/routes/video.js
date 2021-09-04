@@ -74,4 +74,17 @@ router.post("/thumbnail", (req, res) => {
     });
 });
 
+router.post("/uploadVideo", (req, res) => {
+  //Save Video data in MongoDB
+  //req.body => client에서 보낸 모든 정보가 담김
+  const video = new Video(req.body);
+  video.save((err, doc) => {
+    if (err) {
+      return res.json({ success: false, err });
+    } else {
+      res.status(200).json({ success: true });
+    }
+  });
+});
+
 module.exports = router;

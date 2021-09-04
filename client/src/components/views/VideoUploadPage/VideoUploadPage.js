@@ -10,6 +10,7 @@ import {
 } from "antd";
 import Dropzone from "react-dropzone";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 const { TextArea } = Input;
 const { Title } = Typography;
@@ -36,6 +37,7 @@ function VideoUploadPage() {
   const [FilePath, setFilePath] = useState("");
   const [Duration, setDuration] = useState("");
   const [ThumbnailPath, setThumbnailPath] = useState("");
+  const user = useSelector((state) => state.user);
 
   const onTitleChange = (e) => {
     setVideoTitle(e.currentTarget.value);
@@ -86,13 +88,33 @@ function VideoUploadPage() {
     });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const variables = {
+      writer: user.userData._id,
+      title: VideoTitle,
+      description: Description,
+      privacy: Private,
+      filePath: FilePath,
+      category: Category,
+      duration: Duration,
+      thumbnail: ThumbnailPath,
+    };
+    Axios.post("/api/video/uploadVideo", variables).then((response) => {
+      if (response.data.success) {
+      } else {
+        alert("비디오 업로드에 실패했습니다");
+      }
+    });
+  };
+
   return (
     <div>
       <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <Title level={2}>Upload Video</Title>
         </div>
-        <Form onSubmit>
+        <Form onSubmit={onSubmit}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             {/* Drop zone */}
             <Dropzone onDrop={onDrop} multiple={false} maxSize={10000000000}>
@@ -156,7 +178,7 @@ function VideoUploadPage() {
           </select>
           <br />
           <br />
-          <Button type="primary" size="large" onClick>
+          <Button type="primary" size="large" onClick={onSubmit}>
             Submit
           </Button>
         </Form>
