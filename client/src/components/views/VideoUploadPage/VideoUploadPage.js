@@ -11,6 +11,7 @@ import {
 import Dropzone from "react-dropzone";
 import Axios from "axios";
 import { useSelector } from "react-redux";
+import { PromiseProvider } from "mongoose";
 
 const { TextArea } = Input;
 const { Title } = Typography;
@@ -27,7 +28,7 @@ const CategoryOptions = [
   { value: 3, label: "Film & Animation" },
 ];
 
-function VideoUploadPage() {
+function VideoUploadPage(props) {
   // 사용할 value들을 state에 넣어 놓은 후에
   // server에 한꺼번에 보내줄 수 있음
   const [VideoTitle, setVideoTitle] = useState("");
@@ -102,6 +103,10 @@ function VideoUploadPage() {
     };
     Axios.post("/api/video/uploadVideo", variables).then((response) => {
       if (response.data.success) {
+        message.success("성공적으로 업로드를 했습니다");
+        setTimeout(() => {
+          props.history.push("/");
+        }, 3000);
       } else {
         alert("비디오 업로드에 실패했습니다");
       }
