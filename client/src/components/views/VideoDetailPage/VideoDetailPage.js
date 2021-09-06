@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { List, Typography, Row, Col, Avatar } from "antd";
 import Axios from "axios";
-import SideVideo from "./Section/SideVideo"
+import SideVideo from "./Section/SideVideo";
+import Subscribe from "./Section/Subscribe";
 
 const { Title } = Typography;
 
@@ -35,7 +36,7 @@ function VideoDetailPage(props) {
               controls
             ></video>
             {Video.title} {Video.description} {Video.duration}
-            <List.Item actions>
+            <List.Item actions={[<Subscribe userTo={Video.writer._id}/>]}>
               <List.Item.Meta
                 avatar={<Avatar src={Video.writer.image} />}
                 title={Video.writer.name}
