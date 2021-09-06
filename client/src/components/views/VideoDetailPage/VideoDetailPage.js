@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { List, Typography, Row, Col, Avatar } from "antd";
 import Axios from "axios";
+import SideVideo from "./Section/SideVideo"
+
 const { Title } = Typography;
 
 function VideoDetailPage(props) {
@@ -41,6 +43,9 @@ function VideoDetailPage(props) {
               ></List.Item.Meta>
             </List.Item>
           </div>
+        </Col>
+        <Col lg={6} xs={24}>
+          <SideVideo />
         </Col>
       </Row>
     );
