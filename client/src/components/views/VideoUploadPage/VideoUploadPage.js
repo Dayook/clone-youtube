@@ -76,7 +76,6 @@ function VideoUploadPage(props) {
         Axios.post("/api/video/thumbnail", variable).then((res) => {
           if (res.data.success) {
             console.log(res.data);
-            alert("thunbnail generated");
             setDuration(res.data.fileDuration);
             setThumbnailPath(res.data.thumbsFilePath);
           } else {
