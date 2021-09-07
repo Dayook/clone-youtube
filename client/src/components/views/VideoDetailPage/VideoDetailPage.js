@@ -35,7 +35,6 @@ function VideoDetailPage(props) {
               src={`http://localhost:5000/${Video.filePath}`}
               controls
             ></video>
-            {Video.title} {Video.description} {Video.duration}
             <List.Item actions={[<Subscribe userTo={Video.writer._id}/>]}>
               <List.Item.Meta
                 avatar={<Avatar src={Video.writer.image} />}
