@@ -3,6 +3,7 @@ import { List, Typography, Row, Col, Avatar } from "antd";
 import Axios from "axios";
 import SideVideo from "./Section/SideVideo";
 import Subscribe from "./Section/Subscribe";
+import Comment from "./Section/Comment";
 
 const { Title } = Typography;
 
@@ -26,6 +27,9 @@ function VideoDetailPage(props) {
   // .writer.image 정보를 가져오기 전에 화면이 렌더링되면
   // undefined 에러가 남. 따라서 return 이전에 조건설정을 해주면 ㅗㅎ음
   if (Video.writer) {
+    const subscribeButton = Video.writer._id !==
+      localStorage.getItem("userId") && <Subscribe userTo={Video.writer._id} />;
+
     return (
       <Row gutter={(16, 16)}>
         <Col lg={18} xs={24}>
@@ -35,13 +39,14 @@ function VideoDetailPage(props) {
               src={`http://localhost:5000/${Video.filePath}`}
               controls
             ></video>
-            <List.Item actions={[<Subscribe userTo={Video.writer._id}/>]}>
+            <List.Item actions={[subscribeButton]}>
               <List.Item.Meta
                 avatar={<Avatar src={Video.writer.image} />}
                 title={Video.writer.name}
                 description={Video.description}
               ></List.Item.Meta>
             </List.Item>
+            <Comment videoId = {videoId}/>
           </div>
         </Col>
         <Col lg={6} xs={24}>
