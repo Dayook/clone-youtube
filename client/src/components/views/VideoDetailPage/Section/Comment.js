@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 import SingleComment from "./SingleComment";
-
+import ReplyComment from "./ReplyComment";
 function Comment(props) {
   const user = useSelector((state) => state.user);
   const videoId = props.videoId;
@@ -39,11 +39,14 @@ function Comment(props) {
         props.commentLists.map(
           (comment, index) =>
             !comment.responseTo && (
-              <SingleComment
-                refreshFunction={props.refreshFunction}
-                comment={comment}
-                videoId={props.videoId}
-              />
+              <React.Fragment>
+                <SingleComment
+                  refreshFunction={props.refreshFunction}
+                  comment={comment}
+                  videoId={props.videoId}
+                />
+                <ReplyComment parentCommentId={comment._id} videoId={videoId} commentLists={props.commentLists} />
+              </React.Fragment>
             )
         )}
       {/* Root Comment Form */}

@@ -25,7 +25,6 @@ function SingleComment(props) {
       writer: user.userData._id,
       videoId: props.videoId,
       responseTo: props.comment._id,
-      content: CommentValue,
     };
     Axios.post("/api/comments/saveComment", variables).then((response) => {
       if (response.data.success) {

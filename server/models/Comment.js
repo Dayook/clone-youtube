@@ -4,16 +4,20 @@ const Schema = mongoose.Schema;
 const CommentSchema = mongoose.Schema(
   {
     writer: {
-      type:Schema.Types.ObjectId,
-      ref:'User'
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     videoId: {
-      type:Schema.Types.ObjectId,
-      ref: 'Video'
+      type: Schema.Types.ObjectId,
+      ref: "Video",
+    },
+    responseTo: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     content: {
-      type: String
-    }
+      type: String,
+    },
   },
   { timestamps: true }
 );
