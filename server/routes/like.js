@@ -36,13 +36,12 @@ router.post("/getDislikes", (req, res) => {
 router.post("/uplike", (req, res) => {
   let variable = {};
   if (req.body.videoId) {
-    variable = { videoId: req.body.videoId };
+    variable = { videoId: req.body.videoId, userId: req.body.userId };
   } else {
-    variable = { commentId: req.body.commentId };
+    variable = { commentId: req.body.commentId, userId: req.body.userId };
   }
 
   const like = new Like(variable);
-
   like.save((err, likeResult) => {
     if (err) return res.json({ success: false, err });
     // dislike이 이미 클릭이 돼있다면 dislike를 1 줄여준다
@@ -57,9 +56,9 @@ router.post("/uplike", (req, res) => {
 router.post("/downlike", (req, res) => {
   let variable = {};
   if (req.body.videoId) {
-    variable = { videoId: req.body.videoId };
+    variable = { videoId: req.body.videoId, userId: req.body.userId };
   } else {
-    variable = { commentId: req.body.commentId };
+    variable = { commentId: req.body.commentId, userId: req.body.userId };
   }
 
   Like.findOneAndDelete(variable).exec((err, downlikeResult) => {
@@ -71,9 +70,9 @@ router.post("/downlike", (req, res) => {
 router.post("/upDislike", (req, res) => {
   let variable = {};
   if (req.body.videoId) {
-    variable = { videoId: req.body.videoId };
+    variable = { videoId: req.body.videoId, userId: req.body.userId };
   } else {
-    variable = { commentId: req.body.commentId };
+    variable = { commentId: req.body.commentId, userId: req.body.userId };
   }
 
   const dislike = new Dislike(variable);
@@ -92,9 +91,9 @@ router.post("/upDislike", (req, res) => {
 router.post("/downDislike", (req, res) => {
   let variable = {};
   if (req.body.videoId) {
-    variable = { videoId: req.body.videoId };
+    variable = { videoId: req.body.videoId, userId: req.body.userId };
   } else {
-    variable = { commentId: req.body.commentId };
+    variable = { commentId: req.body.commentId, userId: req.body.userId };
   }
 
   Dislike.findOneAndDelete(variable).exec((err, dislikeResult) => {

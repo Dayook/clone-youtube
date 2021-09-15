@@ -13,7 +13,7 @@ function LikeDislikes(props) {
   if (props.video) {
     variable = { videoId: props.videoId, userId: props.userId };
   } else {
-    variable = { commentId: props.commentID, userId: props.userId };
+    variable = { commentId: props.commentId, userId: props.userId };
   }
 
   const doLike = () => {
