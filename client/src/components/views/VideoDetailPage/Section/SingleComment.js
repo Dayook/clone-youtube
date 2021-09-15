@@ -14,7 +14,7 @@ function SingleComment(props) {
   };
 
   const onHandleChange = (event) => {
-    setCommentValue(event.currentTarget.CommentValue);
+    setCommentValue(event.currentTarget.value);
   };
 
   const onSubmit = (event) => {
@@ -31,6 +31,7 @@ function SingleComment(props) {
         console.log(response.data.result);
         setCommentValue("");
         props.refreshFunction(response.data.result);
+        setOpenReply(false);
       } else {
         alert("cannot save comment");
       }
@@ -48,8 +49,8 @@ function SingleComment(props) {
     <div>
       <Comment
         actions={actions}
-        author
-        avatar={<Avatar src alt />}
+        author = {props.comment.writer.name}
+        avatar={<Avatar src={props.comment.writer.image} alt />}
         content={<p>{props.comment.content}</p>}
       ></Comment>
       {OpenReply && (

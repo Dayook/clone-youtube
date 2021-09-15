@@ -3,44 +3,52 @@ import Axios from "axios";
 import SingleComment from "./SingleComment";
 
 function ReplyComment(props) {
-  const [ChildCommentNumber, setChildCommentNumber] = useState(0)
-  useEffect(()=>{
+  const [ChildCommentNumber, setChildCommentNumber] = useState(0);
+  const [OpenReplyComments, setOpenReplyComments] = useState(false);
+  const parentCommentId = props.parentCommentId;
+  const videoId = props.videoId;
+
+  useEffect(() => {
     let commentNumber = 0;
     props.commentLists.map((comment) => {
-      if(comment.responseTo === props.parentCommentId) {
-        commentNumber ++
-
+      if (comment.responseTo === props.parentCommentId) {
+        commentNumber++;
       }
+    });
     setChildCommentNumber(commentNumber);
-    
-  }, [])
-  const renderReplyComment = () =>
+    // []안에 있는 것, props.CommentLists가 바뀔 때마다 한번 더 실행함.
+  }, [props.commentLists]);
+
+  const renderReplyComment = (parentCommentId) =>
     props.commentLists.map((comment, index) => (
       <React.Fragment>
         {comment.responseTo === parentCommentId && (
-          <div>
+          <div stlye={{ width: "80px", marginLeft: "40px" }}>
             <SingleComment
+              width={{ width: "80px", marginLeft: "40px" }}
               refreshFunction={props.refreshFunction}
-              videoId = {videoId}
+              videoId={videoId}
               comment={comment}
             />
-            <ReplyComment commentLists={props.commentLists} />
           </div>
         )}
       </React.Fragment>
     ));
 
+  const onHandleChange = () => {
+    setOpenReplyComments(!OpenReplyComments);
+  };
   return (
     <div>
-      {ChildCommentNumber >0 && 
-      (
-      <p style={{ fontsize: "14px", margin: 0, color: "gray" }}>
-        view more comment(s)
-      </p>
+      {ChildCommentNumber > 0 && (
+        <p style={{ fontsize: "14px", margin: 0, color: "gray" }}>
+          view {ChildCommentNumber} more comment(s)
+        </p>
       )}
-      {renderReplyComment(props.parentCommentId)}
+      {OpenReplyComments && renderReplyComment(props.parentCommentId)}
       reply Comment
     </div>
   );
 }
+
 export default ReplyComment;
